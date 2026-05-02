@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tejas — Product Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #0d0d0b;
+  --ink-2: #1c1c19;
+  --ink-3: #2a2a26;
+  --paper: #f4f3ee;
+  --paper-2: #eceae3;
+  --muted: #6e6e68;
+  --border: #d6d4cc;
+  --accent: #1a1a18;
+  --highlight: #c8b560;
+  --green: #1c5e38;
+  --green-bg: #e6f0ea;
+  --blue: #1a3a7a;
+  --blue-bg: #e6ecf5;
+  --amber: #6b4200;
+  --amber-bg: #f5edda;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+  --mono: 'Space Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--ink);
+  padding: 0 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 52px;
+}
+.nav-logo {
+  font-family: var(--mono); font-size: 13px; font-weight: 700;
+  color: var(--paper); text-decoration: none; letter-spacing: 0.04em;
+}
+.nav-logo span { color: var(--highlight); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 11px; font-weight: 500;
+  color: rgba(244,243,238,0.45);
+  text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--paper); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 52px 56px 72px;
+  position: relative; overflow: hidden;
+}
+.hero-watermark {
+  position: absolute; bottom: -40px; right: -20px;
+  font-family: var(--serif); font-size: clamp(160px, 22vw, 300px);
+  font-weight: 900; color: rgba(255,255,255,0.025);
+  line-height: 1; pointer-events: none; user-select: none;
+  letter-spacing: -0.04em;
+}
+.hero-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: auto; padding-top: 60px;
+}
+.hero-badge {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--highlight);
+  border: 1px solid rgba(200,181,96,0.4);
+  padding: 6px 14px; border-radius: 2px;
+}
+.hero-location {
+  font-family: var(--mono); font-size: 10px;
+  color: rgba(244,243,238,0.25); letter-spacing: 0.08em;
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(72px, 11vw, 150px);
+  font-weight: 900; color: var(--paper);
+  line-height: 0.88; letter-spacing: -0.03em;
+  margin-bottom: 16px;
+}
+.hero-name-accent { color: var(--highlight); }
+.hero-line {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2.5vw, 30px);
+  font-weight: 300; font-style: italic;
+  color: rgba(244,243,238,0.4);
+  margin-bottom: 56px; line-height: 1.4;
+}
+.hero-bottom {
+  display: grid; grid-template-columns: 1fr 360px;
+  gap: 64px; align-items: end;
+}
+.hero-bio {
+  font-size: 15px; line-height: 1.9;
+  color: rgba(244,243,238,0.55);
+}
+.hero-bio strong { color: var(--paper); font-weight: 600; }
+.hero-bio .aside { color: var(--highlight); font-style: italic; }
+.hero-ctas { display: flex; flex-direction: column; gap: 10px; }
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--highlight); color: var(--ink);
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 13px 28px; border-radius: 2px; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: transparent; color: rgba(244,243,238,0.55);
+  font-family: var(--sans); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 12px 28px; border-radius: 2px; text-decoration: none;
+  border: 1px solid rgba(244,243,238,0.15);
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(244,243,238,0.4); color: var(--paper); }
+
+/* SECTION */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 96px 56px; }
+.sec-hdr {
+  display: flex; align-items: baseline; gap: 16px; margin-bottom: 56px;
+  border-bottom: 1px solid var(--border); padding-bottom: 16px;
+}
+.sec-num { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+.sec-title {
+  font-family: var(--serif); font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 700; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1;
+}
+.sec-note {
+  font-family: var(--serif); font-size: 14px; font-style: italic;
+  color: var(--muted); margin-left: auto;
+}
+
+/* WORK */
+.work-item {
+  display: grid; grid-template-columns: 240px 1fr; gap: 48px;
+  padding: 44px 0; border-top: 1px solid var(--border); align-items: start;
+}
+.work-item:last-child { border-bottom: 1px solid var(--border); }
+.work-co {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.work-role {
+  font-family: var(--serif); font-size: 20px; font-weight: 700;
+  color: var(--ink); line-height: 1.2; margin-bottom: 6px;
+}
+.work-period {
+  font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em;
+}
+.work-desc { font-size: 14px; line-height: 1.8; color: var(--muted); margin-bottom: 18px; }
+.work-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
+.work-bullets li {
+  font-size: 14px; line-height: 1.65; color: #3a3a35;
+  padding-left: 18px; position: relative;
+}
+.work-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--muted); font-size: 11px; top: 3px; }
+.work-bullets li strong { color: var(--ink); font-weight: 600; }
+.work-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.pill { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+.pill.g { background: var(--green-bg); color: var(--green); }
+.pill.b { background: var(--blue-bg); color: var(--blue); }
+.pill.a { background: var(--amber-bg); color: var(--amber); }
+
+/* PERSONALITY STRIP */
+.personality-strip {
+  background: var(--ink-2);
+  padding: 72px 56px;
+}
+.personality-inner { max-width: 1100px; margin: 0 auto; }
+.personality-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--highlight); margin-bottom: 28px;
+}
+.personality-quote {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3vw, 34px);
+  font-weight: 300; font-style: italic;
+  color: rgba(244,243,238,0.75);
+  line-height: 1.45; max-width: 780px; margin-bottom: 24px;
+}
+.personality-body {
+  font-size: 14px; line-height: 1.85;
+  color: rgba(244,243,238,0.4); max-width: 600px;
+}
+.personality-body strong { color: rgba(244,243,238,0.75); font-weight: 600; }
+
+/* PROJECTS */
+.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+.proj-card {
+  background: var(--paper);
+  padding: 36px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: background 0.2s;
+  position: relative; overflow: hidden;
+}
+.proj-card:hover { background: var(--paper-2); }
+.proj-card::after {
+  content: attr(data-num);
+  position: absolute; bottom: -16px; right: 20px;
+  font-family: var(--serif); font-size: 90px; font-weight: 900;
+  color: rgba(0,0,0,0.04); line-height: 1; pointer-events: none;
+}
+.proj-type {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+}
+.proj-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1.25; }
+.proj-desc { font-size: 13px; line-height: 1.78; color: var(--muted); flex: 1; }
+.proj-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+.stack-chip {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em;
+  padding: 3px 8px; background: var(--paper-2);
+  color: var(--muted); border: 1px solid var(--border); border-radius: 2px;
+}
+.proj-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.proj-pill { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+.proj-pill.g { background: var(--green-bg); color: var(--green); }
+.proj-pill.b { background: var(--blue-bg); color: var(--blue); }
+.proj-pill.a { background: var(--amber-bg); color: var(--amber); }
+
+/* SKILLS */
+.skills-bg { background: var(--ink); padding: 96px 56px; }
+.skills-inner { max-width: 1100px; margin: 0 auto; }
+.skills-hdr { display: flex; align-items: baseline; gap: 16px; margin-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; }
+.skills-hdr .sec-num { color: rgba(244,243,238,0.25); }
+.skills-hdr .sec-title { color: var(--paper); }
+.skills-hdr .sec-note { color: rgba(244,243,238,0.25); }
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+.skill-group { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; }
+.skill-group-title {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--highlight); margin-bottom: 18px;
+}
+.skill-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.skill-list li { font-size: 14px; color: rgba(244,243,238,0.5); display: flex; align-items: center; gap: 10px; }
+.skill-list li::before { content: ''; width: 3px; height: 3px; border-radius: 50%; background: var(--highlight); flex-shrink: 0; }
+
+/* EDUCATION */
+.edu-grid { display: flex; flex-direction: column; gap: 0; }
+.edu-item {
+  display: grid; grid-template-columns: 160px 1fr;
+  gap: 40px; padding: 32px 0; border-top: 1px solid var(--border);
+  align-items: start;
+}
+.edu-item:last-child { border-bottom: 1px solid var(--border); }
+.edu-year { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em; padding-top: 3px; }
+.edu-degree { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+.edu-school { font-size: 13px; color: var(--muted); }
+
+/* ACHIEVEMENTS */
+.ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+.ach-item {
+  background: var(--paper);
+  padding: 28px 32px;
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.ach-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.ach-title { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 3px; }
+.ach-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.03em; }
+
+/* CONTACT */
+.contact-wrap { background: var(--ink); padding: 96px 56px; }
+.contact-inner { max-width: 1100px; margin: 0 auto; }
+.contact-h {
+  font-family: var(--serif);
+  font-size: clamp(44px, 7vw, 90px);
+  font-weight: 900; color: var(--paper);
+  line-height: 0.92; letter-spacing: -0.03em; margin-bottom: 12px;
+}
+.contact-h span { color: var(--highlight); }
+.contact-sub {
+  font-family: var(--serif); font-size: 18px; font-style: italic;
+  font-weight: 300; color: rgba(244,243,238,0.35); margin-bottom: 52px;
+}
+.contact-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.c-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 13px 24px; border-radius: 2px; text-decoration: none; transition: all 0.2s;
+}
+.c-btn.primary { background: var(--highlight); color: var(--ink); }
+.c-btn.primary:hover { opacity: 0.88; }
+.c-btn.ghost { background: transparent; color: rgba(244,243,238,0.5); border: 1px solid rgba(244,243,238,0.12); }
+.c-btn.ghost:hover { border-color: rgba(244,243,238,0.35); color: var(--paper); }
+
+footer {
+  background: #080808; padding: 18px 56px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-t { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244,243,238,0.18); }
+
+@media (max-width: 860px) {
+  nav, .hero, .wrap, .personality-strip, .skills-bg, .contact-wrap, footer { padding-left: 24px; padding-right: 24px; }
+  .hero-bottom { grid-template-columns: 1fr; gap: 32px; }
+  .hero-ctas { flex-direction: row; flex-wrap: wrap; }
+  .work-item { grid-template-columns: 1fr; gap: 16px; }
+  .project-grid, .ach-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .edu-item { grid-template-columns: 1fr; gap: 8px; }
+  footer { flex-direction: column; gap: 6px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     ✏️  EDIT YOUR PORTFOLIO HERE — everything updates automatically
+     ════════════════════════════════════════════════════════ -->
+<script>
+const PORTFOLIO = {
+
+  /* ── Personal info ─────────────────────────────── */
+  name: "Tejas",
+  badge: "Product · Data · Strategy",
+  location: "Delhi, IN · Est. 2003",
+  tagline: "I build things that think, so people don't have to.",
+  bio: `A <strong>Product Analyst</strong> with a background in Electrical Engineering who found his calling at the intersection of data, strategy, and user behaviour. I translate messy problems into clean systems — whether that's a Python automation replacing a 30-minute manual ritual, a PRD that actually gets built, or a city expansion that drives real growth. <span class="aside">Also, a 3x competition winner and occasional standup comedian — both require knowing exactly when the room stops paying attention.</span>`,
+  email: "tejaspd04@gmail.com",
+  phone: "+91 78400 77398",
+  linkedin: "https://www.linkedin.com/in/tejas-27b113256/",
+  contactTagline: "— open to product, analytics, and strategy roles.",
+  personalityQuote: `"I've won standup competitions, built data pipelines, and led product launches — not necessarily in that order, and not always without breaking something first."`,
+  personalityBody: `I'm the kind of person who writes <strong>automation scripts to avoid doing something twice</strong>, who maps user journeys the same way he maps punchline structures — looking for the exact moment something stops making sense. Part engineer, part storyteller, fully allergic to manual processes.`,
+
+  /* ── Work Experience ───────────────────────────── */
+  work: [
+    {
+      company: "Cars24",
+      role: "Product Analyst Intern",
+      period: "Jan 2026 — Apr 2026",
+      desc: "Embedded in the new auto segment — owned data infrastructure, product ops for a new business vertical, and led a city expansion initiative from strategy to full execution.",
+      bullets: [
+        "Designed and deployed an <strong>automated lead performance dashboard</strong> parsing 15+ fields from nested JSON API responses — processes 2,500+ daily records with zero manual intervention",
+        "Built <strong>Python + Google Sheets automation</strong> for multi-brand lead tracking with VLOOKUP-driven attribution and auto-updated daily counts",
+        "Led end-to-end <strong>product operations for a new business vertical</strong>, driving user engagement through continuous website optimisation",
+        "Spearheaded <strong>product-led city expansion</strong> — launched 39 cities on web, driving 11.1% YoY growth"
+      ],
+      pills: [
+        { label: "11.1% YoY growth", type: "g" },
+        { label: "39 cities launched", type: "b" },
+        { label: "2,500+ records/day automated", type: "a" }
+      ]
+    },
+    {
+      company: "Times Internet",
+      role: "Product & Brand Intern",
+      period: "May 2025 — Aug 2025",
+      desc: "Luxury content vertical — owned the full product lifecycle of an in-app content feature from competitive research through design collaboration to GTM rollout.",
+      bullets: [
+        "Led <strong>data-driven campaign analysis</strong> using acquisition trends, source attribution, and channel metrics — targeting 5,000+ high-value users across luxury segments",
+        "Owned full product lifecycle: <strong>7+ competitor analysis</strong>, user flow scoping, UI/UX design collaboration, and rollout funnel definition",
+        "Pioneered <strong>co-branded content partnerships</strong> with premium publishers, aligning editorial storytelling with product value"
+      ],
+      pills: [
+        { label: "5,000+ users targeted", type: "b" },
+        { label: "7+ competitors benchmarked", type: "g" }
+      ]
+    },
+    {
+      company: "Alt Strategy",
+      role: "Founder's Office Intern",
+      period: "May 2024 — Jul 2024",
+      desc: "First role out of the founder's office — ran full-cycle marketing campaigns and built a GTM strategy for US and European market entry.",
+      bullets: [
+        "Executed marketing campaigns via Instantly and Apollo — achieved <strong>72% open rate</strong> and 1.4% reply rate",
+        "Built <strong>GTM strategy</strong> for US and European market launch by analysing user data and market trends",
+        "Researched AI applications in marketing — analysed <strong>11+ case studies</strong> to surface actionable recommendations"
+      ],
+      pills: [
+        { label: "72% email open rate", type: "g" },
+        { label: "11+ case studies", type: "a" }
+      ]
+    }
+  ],
+
+  /* ── Projects ──────────────────────────────────── */
+  projects: [
+    {
+      type: "Automation · Dashboard",
+      title: "Lead API Parser & Performance Dashboard",
+      desc: "HTML dashboard that ingests raw CSV exports from 5 OEM APIs and parses 15+ nested JSON fields into clean tabular output — name, phone, city, model, lead GUID, status. Features drag-and-drop upload, model × date pivot table, and one-click Excel export. Cut manual reporting time to zero.",
+      stack: ["Python", "Pandas", "HTML/JS", "SheetJS", "JSON Parsing"],
+      pills: [{ label: "2,500+ records/day", type: "g" }, { label: "5 brands", type: "b" }]
+    },
+    {
+      type: "Automation · Google Sheets",
+      title: "Lead Source Attribution Engine",
+      desc: "End-to-end Python automation replacing a 30-minute manual paste-and-match routine. Reads all brand CSVs, pushes to Google Sheets via API, adds VLOOKUP-based lead source attribution across every brand output sheet, and auto-fills daily tracking counts — one command, fully refreshed.",
+      stack: ["Python", "gspread", "Google Sheets API", "openpyxl", "VLOOKUP"],
+      pills: [{ label: "Fully automated", type: "g" }, { label: "5 brands synced", type: "b" }]
+    },
+    {
+      type: "Product Strategy · SEO",
+      title: "New Auto Platform — Competitive SEO Audit",
+      desc: "Deep teardown of a new auto platform vs two major competitors. Identified UX gaps, CTA copy failures, content depth weaknesses, and organic traffic blind spots. Produced an 8-step PM playbook covering keyword strategy, technical SEO, content standards, and a Looker Studio measurement spec.",
+      stack: ["SEO Audit", "Competitive Analysis", "Looker Studio", "GSC", "Product Strategy"],
+      pills: [{ label: "3 competitors", type: "b" }, { label: "8-step roadmap", type: "a" }]
+    },
+    {
+      type: "Data Analysis · SQL · Python",
+      title: "Walmart Sales Data Pipeline",
+      desc: "Extracted and processed point-of-sale data using MySQL and Pandas to build 5 automated pipelines. Identified sales trends, product performance, and customer behaviour through advanced SQL joins and Python visualisations — delivering insights for inventory optimisation and demand forecasting.",
+      stack: ["MySQL", "Python", "Pandas", "Data Visualisation"],
+      pills: [{ label: "5 pipelines built", type: "g" }, { label: "Demand forecasting", type: "b" }]
+    },
+    {
+      type: "Product Case Study · Research",
+      title: "Hinge — Product Teardown & Redesign",
+      desc: "Full product teardown: user journey, feature set, market sizing, competitive landscape, shortcomings. Surveyed 200+ users to validate pain points. Developed product solutions for the two biggest problems on dating apps — ghosting and the existential terror of sending the first message.",
+      stack: ["User Research", "Market Sizing", "Competitive Analysis", "PRD"],
+      pills: [{ label: "200+ users surveyed", type: "g" }]
+    },
+    {
+      type: "Product · Community",
+      title: "Axiom NSUT — Website Product Launch",
+      desc: "As VP of The Philosophical Society of NSUT, planned and executed the full product development and launch of the society's website. Managed cross-functional teams across tech and design, defined requirements, and owned timelines — 250+ community members as end users, zero one-star reviews.",
+      stack: ["Product Management", "Cross-functional Collaboration", "Web"],
+      pills: [{ label: "250+ community members", type: "g" }]
+    }
+  ],
+
+  /* ── Skills ────────────────────────────────────── */
+  skills: [
+    {
+      group: "Data & Analytics",
+      items: ["Python (Pandas, NumPy)", "MySQL / SQL", "Google Sheets API", "Excel / openpyxl", "Looker Studio", "Data visualisation"]
+    },
+    {
+      group: "Product",
+      items: ["PRD writing", "User research & surveys", "Competitive analysis", "GTM strategy", "Product teardowns", "Feature scoping & roadmaps"]
+    },
+    {
+      group: "Automation & Ops",
+      items: ["JSON parsing pipelines", "gspread automation", "VLOOKUP / COUNTIFS", "Dashboard architecture", "Process streamlining", "Technical SEO"]
+    },
+    {
+      group: "Tools",
+      items: ["Google Search Console", "Instantly / Apollo", "Figma (collaboration)", "GitHub", "Notion", "Ahrefs (basics)"]
+    }
+  ],
+
+  /* ── Education ─────────────────────────────────── */
+  education: [
+    {
+      year: "2022 – 2026",
+      degree: "B.Tech — Electrical Engineering",
+      school: "Netaji Subhas University of Technology (NSUT), Delhi"
+    },
+    {
+      year: "2021 – 2022",
+      degree: "CBSE Class XII",
+      school: "Andhra Education Society Janakpuri, Delhi"
+    }
+  ],
+
+  /* ── Achievements ──────────────────────────────── */
+  achievements: [
+    { icon: "🥇", title: "1st Place — Business MUN", sub: "University of Delhi · 100+ participants" },
+    { icon: "🚀", title: "Top 5 — VentureX Startup Pitch", sub: "DTU · 20+ competing teams" },
+    { icon: "🏆", title: "3rd Place — Brahmastra Competition", sub: "NSUT · 15+ teams" },
+    { icon: "🎤", title: "3rd Place — Standup Comedy, Mood Indigo Prelims", sub: "IIT Bombay · Delhi round — the data guy has range" },
+    { icon: "⚙️", title: "VP — Axiom, The Philosophical Society of NSUT", sub: "Led 250+ member community & website product launch" },
+    { icon: "📢", title: "CPC Events Lead", sub: "NSUT · 30+ participants across all years" }
+  ]
+
+}; // ← End of PORTFOLIO config. Edit anything above this line.
+</script>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" id="nav-logo">Tejas<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Say hi</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero-section">
+  <div class="hero-watermark" id="hero-watermark"></div>
+  <div class="hero-top">
+    <span class="hero-badge" id="hero-badge"></span>
+    <span class="hero-location" id="hero-location"></span>
+  </div>
+  <div class="hero-name" id="hero-name"></div>
+  <div class="hero-line" id="hero-tagline"></div>
+  <div class="hero-bottom">
+    <p class="hero-bio" id="hero-bio"></p>
+    <div class="hero-ctas">
+      <a class="btn-primary" id="cta-email">Get in touch ↗</a>
+      <a class="btn-ghost" id="cta-linkedin" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<div class="wrap" id="work">
+  <div class="sec-hdr">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">Where I've been</h2>
+    <span class="sec-note">experience</span>
+  </div>
+  <div id="work-list"></div>
+</div>
+
+<!-- PERSONALITY -->
+<div class="personality-strip">
+  <div class="personality-inner">
+    <div class="personality-label">A note from the builder</div>
+    <div class="personality-quote" id="p-quote"></div>
+    <p class="personality-body" id="p-body"></p>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="wrap" id="projects">
+  <div class="sec-hdr">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title">Things I've built</h2>
+    <span class="sec-note">selected work</span>
+  </div>
+  <div class="project-grid" id="project-grid"></div>
+</div>
+
+<!-- SKILLS -->
+<div class="skills-bg" id="skills">
+  <div class="skills-inner">
+    <div class="skills-hdr sec-hdr">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">What I work with</h2>
+      <span class="sec-note">tools & craft</span>
+    </div>
+    <div class="skills-grid" id="skills-grid"></div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<div class="wrap" id="education">
+  <div class="sec-hdr">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title">Education</h2>
+    <span class="sec-note">academic background</span>
+  </div>
+  <div class="edu-grid" id="edu-grid"></div>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="wrap" style="padding-top:0" id="achievements">
+  <div class="sec-hdr">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">Achievements</h2>
+    <span class="sec-note">wins, big and small</span>
+  </div>
+  <div class="ach-grid" id="ach-grid"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-wrap" id="contact">
+  <div class="contact-inner">
+    <div class="contact-h">Let's make<br>something <span>work.</span></div>
+    <div class="contact-sub" id="contact-tagline"></div>
+    <div class="contact-row" id="contact-row"></div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-t" id="footer-name"></span>
+  <span class="footer-t">Product · Data · Occasionally Funny</span>
+</footer>
+
+<script>
+// ── RENDERER ─────────────────────────────────────────────────────────────────
+const P = PORTFOLIO;
+
+// Nav logo
+document.getElementById('nav-logo').innerHTML = P.name + '<span>.</span>';
+
+// Hero
+document.getElementById('hero-watermark').textContent = P.name.toUpperCase();
+document.getElementById('hero-badge').textContent = P.badge;
+document.getElementById('hero-location').textContent = P.location;
+document.getElementById('hero-name').innerHTML = P.name + '<span class="hero-name-accent">.</span>';
+document.getElementById('hero-tagline').textContent = P.tagline;
+document.getElementById('hero-bio').innerHTML = P.bio;
+document.getElementById('cta-email').href = 'mailto:' + P.email;
+document.getElementById('cta-linkedin').href = P.linkedin;
+
+// Personality
+document.getElementById('p-quote').textContent = P.personalityQuote;
+document.getElementById('p-body').innerHTML = P.personalityBody;
+
+// Work
+const workList = document.getElementById('work-list');
+P.work.forEach(w => {
+  const bulletsHTML = w.bullets.map(b => `<li>${b}</li>`).join('');
+  const pillsHTML = w.pills.map(p => `<span class="pill ${p.type}">${p.label}</span>`).join('');
+  workList.innerHTML += `
+    <div class="work-item">
+      <div>
+        <div class="work-co">${w.company}</div>
+        <div class="work-role">${w.role}</div>
+        <div class="work-period">${w.period}</div>
+      </div>
+      <div>
+        <p class="work-desc">${w.desc}</p>
+        <ul class="work-bullets">${bulletsHTML}</ul>
+        <div class="work-pills">${pillsHTML}</div>
+      </div>
+    </div>`;
+});
+
+// Projects
+const projGrid = document.getElementById('project-grid');
+P.projects.forEach((pr, i) => {
+  const stackHTML = pr.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
+  const pillsHTML = pr.pills.map(p => `<span class="proj-pill ${p.type}">${p.label}</span>`).join('');
+  projGrid.innerHTML += `
+    <div class="proj-card" data-num="0${i+1}">
+      <div class="proj-type">${pr.type}</div>
+      <div class="proj-title">${pr.title}</div>
+      <div class="proj-desc">${pr.desc}</div>
+      <div class="proj-stack">${stackHTML}</div>
+      <div class="proj-pills">${pillsHTML}</div>
+    </div>`;
+});
+
+// Skills
+const skillsGrid = document.getElementById('skills-grid');
+P.skills.forEach(sg => {
+  const itemsHTML = sg.items.map(i => `<li>${i}</li>`).join('');
+  skillsGrid.innerHTML += `
+    <div class="skill-group">
+      <div class="skill-group-title">${sg.group}</div>
+      <ul class="skill-list">${itemsHTML}</ul>
+    </div>`;
+});
+
+// Education
+const eduGrid = document.getElementById('edu-grid');
+P.education.forEach(e => {
+  eduGrid.innerHTML += `
+    <div class="edu-item">
+      <div class="edu-year">${e.year}</div>
+      <div>
+        <div class="edu-degree">${e.degree}</div>
+        <div class="edu-school">${e.school}</div>
+      </div>
+    </div>`;
+});
+
+// Achievements
+const achGrid = document.getElementById('ach-grid');
+P.achievements.forEach(a => {
+  achGrid.innerHTML += `
+    <div class="ach-item">
+      <div class="ach-icon">${a.icon}</div>
+      <div>
+        <div class="ach-title">${a.title}</div>
+        <div class="ach-sub">${a.sub}</div>
+      </div>
+    </div>`;
+});
+
+// Contact
+document.getElementById('contact-tagline').textContent = P.contactTagline;
+document.getElementById('contact-row').innerHTML = `
+  <a href="mailto:${P.email}" class="c-btn primary">✉ ${P.email}</a>
+  <a href="${P.linkedin}" target="_blank" class="c-btn ghost">↗ LinkedIn</a>
+  <a href="tel:${P.phone.replace(/\s/g,'')}" class="c-btn ghost">↗ ${P.phone}</a>`;
+
+// Footer
+document.getElementById('footer-name').textContent = `© 2026 ${P.name.toUpperCase()} · Delhi, India`;
+</script>
+</body>
+</html>
