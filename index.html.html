@@ -252,6 +252,22 @@ footer { background: #080808; padding: 18px 56px; display: flex; justify-content
 .login-btn { width: 100%; background: var(--highlight); color: var(--ink); font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 13px; border: none; border-radius: 2px; cursor: pointer; }
 .login-err { font-family: var(--mono); font-size: 10px; color: #e05540; margin-top: 8px; display: none; }
 
+/* DESIGN PANEL */
+.design-section-title { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--highlight); margin-bottom: 14px; }
+.design-grid { display: flex; flex-direction: column; gap: 14px; }
+.design-row { display: flex; flex-direction: column; gap: 6px; }
+.design-row label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.color-row { display: flex; align-items: center; gap: 10px; }
+.color-pick { width: 44px; height: 32px; border: 1px solid #2a2a26; border-radius: 3px; padding: 2px; background: #1a1a18; cursor: pointer; }
+.color-val { font-family: var(--mono); font-size: 11px; color: rgba(244,243,238,0.4); }
+.design-select { background: #1a1a18; border: 1px solid #2a2a26; color: var(--paper); font-family: var(--sans); font-size: 12px; padding: 8px 10px; border-radius: 3px; outline: none; width: 100%; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.design-slider { flex: 1; accent-color: var(--highlight); height: 4px; }
+.slider-val { font-family: var(--mono); font-size: 11px; color: rgba(244,243,238,0.4); min-width: 36px; }
+.preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.preset-btn { padding: 12px; border: none; border-radius: 4px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; transition: opacity 0.2s; }
+.preset-btn:hover { opacity: 0.85; }
+
 @media (max-width: 860px) {
   nav, .hero, .wrap, .personality-strip, .skills-bg, .contact-wrap, footer { padding-left: 24px; padding-right: 24px; }
   .hero-bottom { grid-template-columns: 1fr; gap: 32px; }
@@ -297,6 +313,7 @@ footer { background: #080808; padding: 18px 56px; display: flex; justify-content
       <button class="admin-tab" onclick="switchTab('education')">Education</button>
       <button class="admin-tab" onclick="switchTab('achievements')">Achievements</button>
       <button class="admin-tab" onclick="switchTab('info')">Info</button>
+      <button class="admin-tab" onclick="switchTab('design')">🎨 Design</button>
     </div>
     <div class="admin-body">
 
@@ -401,14 +418,119 @@ footer { background: #080808; padding: 18px 56px; display: flex; justify-content
         </div>
       </div>
 
+      <!-- DESIGN TAB -->
+      <div class="admin-section" id="tab-design">
+        <div class="design-section-title">🎨 Colours</div>
+        <div class="design-grid">
+          <div class="design-row">
+            <label>Background (light sections)</label>
+            <div class="color-row"><input type="color" id="d-paper" class="color-pick" oninput="livePreview()"/><span class="color-val" id="d-paper-val">#f4f3ee</span></div>
+          </div>
+          <div class="design-row">
+            <label>Background (dark sections)</label>
+            <div class="color-row"><input type="color" id="d-ink" class="color-pick" oninput="livePreview()"/><span class="color-val" id="d-ink-val">#0d0d0b</span></div>
+          </div>
+          <div class="design-row">
+            <label>Accent / Highlight colour</label>
+            <div class="color-row"><input type="color" id="d-highlight" class="color-pick" oninput="livePreview()"/><span class="color-val" id="d-highlight-val">#c8b560</span></div>
+          </div>
+          <div class="design-row">
+            <label>Body text colour</label>
+            <div class="color-row"><input type="color" id="d-muted" class="color-pick" oninput="livePreview()"/><span class="color-val" id="d-muted-val">#6e6e68</span></div>
+          </div>
+          <div class="design-row">
+            <label>Border / divider colour</label>
+            <div class="color-row"><input type="color" id="d-border" class="color-pick" oninput="livePreview()"/><span class="color-val" id="d-border-val">#d6d4cc</span></div>
+          </div>
+        </div>
+
+        <div class="design-section-title" style="margin-top:28px">✏️ Typography</div>
+        <div class="design-grid">
+          <div class="design-row">
+            <label>Heading font</label>
+            <select id="d-serif" class="design-select" onchange="livePreview()">
+              <option value="'Fraunces', Georgia, serif">Fraunces (current)</option>
+              <option value="'Playfair Display', Georgia, serif">Playfair Display</option>
+              <option value="'DM Serif Display', Georgia, serif">DM Serif</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+            </select>
+          </div>
+          <div class="design-row">
+            <label>Body font</label>
+            <select id="d-sans" class="design-select" onchange="livePreview()">
+              <option value="'Space Grotesk', system-ui, sans-serif">Space Grotesk (current)</option>
+              <option value="'Inter', system-ui, sans-serif">Inter</option>
+              <option value="'DM Sans', system-ui, sans-serif">DM Sans</option>
+              <option value="system-ui, sans-serif">System Default</option>
+              <option value="'Nunito', sans-serif">Nunito</option>
+            </select>
+          </div>
+          <div class="design-row">
+            <label>Base font size</label>
+            <div class="slider-row">
+              <input type="range" id="d-fontsize" min="13" max="20" value="16" class="design-slider" oninput="livePreview(); document.getElementById('d-fontsize-val').textContent=this.value+'px'"/>
+              <span class="slider-val" id="d-fontsize-val">16px</span>
+            </div>
+          </div>
+          <div class="design-row">
+            <label>Line height / spacing</label>
+            <div class="slider-row">
+              <input type="range" id="d-lineheight" min="140" max="220" value="160" class="design-slider" oninput="livePreview(); document.getElementById('d-lineheight-val').textContent=(this.value/100).toFixed(1)"/>
+              <span class="slider-val" id="d-lineheight-val">1.6</span>
+            </div>
+          </div>
+          <div class="design-row">
+            <label>Letter spacing</label>
+            <div class="slider-row">
+              <input type="range" id="d-letterspacing" min="0" max="8" value="0" step="0.5" class="design-slider" oninput="livePreview(); document.getElementById('d-letterspacing-val').textContent=this.value+'px'"/>
+              <span class="slider-val" id="d-letterspacing-val">0px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="design-section-title" style="margin-top:28px">📐 Layout & Spacing</div>
+        <div class="design-grid">
+          <div class="design-row">
+            <label>Section padding (top/bottom)</label>
+            <div class="slider-row">
+              <input type="range" id="d-padding" min="40" max="140" value="96" class="design-slider" oninput="livePreviewPadding(); document.getElementById('d-padding-val').textContent=this.value+'px'"/>
+              <span class="slider-val" id="d-padding-val">96px</span>
+            </div>
+          </div>
+          <div class="design-row">
+            <label>Card border radius</label>
+            <div class="slider-row">
+              <input type="range" id="d-radius" min="0" max="20" value="2" class="design-slider" oninput="livePreviewRadius(); document.getElementById('d-radius-val').textContent=this.value+'px'"/>
+              <span class="slider-val" id="d-radius-val">2px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="design-section-title" style="margin-top:28px">🌈 Preset Themes</div>
+        <div class="preset-grid">
+          <button class="preset-btn" onclick="applyPreset('default')" style="background:#0d0d0b;color:#c8b560">Default Gold</button>
+          <button class="preset-btn" onclick="applyPreset('ocean')" style="background:#0a1628;color:#4a9eff">Ocean Blue</button>
+          <button class="preset-btn" onclick="applyPreset('forest')" style="background:#0d1f0f;color:#5cb85c">Forest Green</button>
+          <button class="preset-btn" onclick="applyPreset('minimal')" style="background:#ffffff;color:#111111;border:1px solid #ddd">Pure Minimal</button>
+          <button class="preset-btn" onclick="applyPreset('rouge')" style="background:#1a0505;color:#e05540">Deep Rouge</button>
+          <button class="preset-btn" onclick="applyPreset('slate')" style="background:#1e2330;color:#a0b4d6">Slate Night</button>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:24px">
+          <button class="btn-save" onclick="saveDesign()">Save Design</button>
+          <button class="btn-cancel" onclick="resetDesign()">Reset to Default</button>
+        </div>
+      </div>
+
+
+
     </div>
     <div class="admin-save-bar">
       <span class="save-status" id="saveStatus">All changes saved to Firebase</span>
     </div>
   </div>
 </div>
-
-<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo" id="nav-logo">Tejas<span>.</span></a>
   <ul class="nav-links">
@@ -1019,8 +1141,144 @@ window.saveInfo = function() {
   set(ref(db, 'info'), data).then(() => setStatus('Info saved ✓', 'ok')).catch(() => setStatus('Error', 'err'));
 };
 
-// DELETE
-window.deleteItem = function(section, id) {
+// ── DESIGN SYSTEM ────────────────────────────────────────────────────────────
+const DESIGN_DEFAULTS = {
+  paper: '#f4f3ee', ink: '#0d0d0b', highlight: '#c8b560',
+  muted: '#6e6e68', border: '#d6d4cc',
+  serif: "'Fraunces', Georgia, serif",
+  sans: "'Space Grotesk', system-ui, sans-serif",
+  fontsize: 16, lineheight: 160, letterspacing: 0, padding: 96, radius: 2
+};
+
+const PRESETS = {
+  default: { paper:'#f4f3ee', ink:'#0d0d0b', highlight:'#c8b560', muted:'#6e6e68', border:'#d6d4cc' },
+  ocean:   { paper:'#eef4ff', ink:'#0a1628', highlight:'#4a9eff', muted:'#5a7a9a', border:'#c0d0e8' },
+  forest:  { paper:'#edf5ee', ink:'#0d1f0f', highlight:'#5cb85c', muted:'#4a7a50', border:'#b8d8bc' },
+  minimal: { paper:'#ffffff', ink:'#111111', highlight:'#333333', muted:'#777777', border:'#dddddd' },
+  rouge:   { paper:'#fdf0ef', ink:'#1a0505', highlight:'#e05540', muted:'#7a4a48', border:'#e8c8c5' },
+  slate:   { paper:'#eef0f5', ink:'#1e2330', highlight:'#a0b4d6', muted:'#5a6880', border:'#c8d0de' }
+};
+
+function applyDesignToPage(design) {
+  const d = { ...DESIGN_DEFAULTS, ...design };
+  const root = document.documentElement;
+  // derive ink-2 and ink-3 from ink (slightly lighter)
+  root.style.setProperty('--paper', d.paper);
+  root.style.setProperty('--paper-2', shadeColor(d.paper, -5));
+  root.style.setProperty('--ink', d.ink);
+  root.style.setProperty('--ink-2', shadeColor(d.ink, 10));
+  root.style.setProperty('--ink-3', shadeColor(d.ink, 18));
+  root.style.setProperty('--highlight', d.highlight);
+  root.style.setProperty('--muted', d.muted);
+  root.style.setProperty('--border', d.border);
+  root.style.setProperty('--serif', d.serif);
+  root.style.setProperty('--sans', d.sans);
+  document.body.style.fontSize = d.fontsize + 'px';
+  document.body.style.lineHeight = (d.lineheight / 100).toFixed(2);
+  document.body.style.letterSpacing = d.letterspacing + 'px';
+  document.querySelectorAll('.wrap').forEach(el => { el.style.paddingTop = d.padding + 'px'; el.style.paddingBottom = d.padding + 'px'; });
+  document.querySelectorAll('.proj-card, .ach-item, .admin-form, .login-box').forEach(el => el.style.borderRadius = d.radius + 'px');
+}
+
+function shadeColor(hex, percent) {
+  try {
+    const num = parseInt(hex.replace('#',''), 16);
+    const r = Math.min(255, Math.max(0, (num >> 16) + percent * 2.55 | 0));
+    const g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + percent * 2.55 | 0));
+    const b = Math.min(255, Math.max(0, (num & 0xff) + percent * 2.55 | 0));
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  } catch(e) { return hex; }
+}
+
+function syncDesignUI(design) {
+  const d = { ...DESIGN_DEFAULTS, ...design };
+  document.getElementById('d-paper').value = d.paper;
+  document.getElementById('d-paper-val').textContent = d.paper;
+  document.getElementById('d-ink').value = d.ink;
+  document.getElementById('d-ink-val').textContent = d.ink;
+  document.getElementById('d-highlight').value = d.highlight;
+  document.getElementById('d-highlight-val').textContent = d.highlight;
+  document.getElementById('d-muted').value = d.muted;
+  document.getElementById('d-muted-val').textContent = d.muted;
+  document.getElementById('d-border').value = d.border;
+  document.getElementById('d-border-val').textContent = d.border;
+  document.getElementById('d-serif').value = d.serif;
+  document.getElementById('d-sans').value = d.sans;
+  document.getElementById('d-fontsize').value = d.fontsize;
+  document.getElementById('d-fontsize-val').textContent = d.fontsize + 'px';
+  document.getElementById('d-lineheight').value = d.lineheight;
+  document.getElementById('d-lineheight-val').textContent = (d.lineheight / 100).toFixed(1);
+  document.getElementById('d-letterspacing').value = d.letterspacing;
+  document.getElementById('d-letterspacing-val').textContent = d.letterspacing + 'px';
+  document.getElementById('d-padding').value = d.padding;
+  document.getElementById('d-padding-val').textContent = d.padding + 'px';
+  document.getElementById('d-radius').value = d.radius;
+  document.getElementById('d-radius-val').textContent = d.radius + 'px';
+}
+
+function getDesignFromUI() {
+  return {
+    paper: document.getElementById('d-paper').value,
+    ink: document.getElementById('d-ink').value,
+    highlight: document.getElementById('d-highlight').value,
+    muted: document.getElementById('d-muted').value,
+    border: document.getElementById('d-border').value,
+    serif: document.getElementById('d-serif').value,
+    sans: document.getElementById('d-sans').value,
+    fontsize: parseInt(document.getElementById('d-fontsize').value),
+    lineheight: parseInt(document.getElementById('d-lineheight').value),
+    letterspacing: parseFloat(document.getElementById('d-letterspacing').value),
+    padding: parseInt(document.getElementById('d-padding').value),
+    radius: parseInt(document.getElementById('d-radius').value)
+  };
+}
+
+window.livePreview = function() {
+  const d = getDesignFromUI();
+  // update color val labels
+  ['paper','ink','highlight','muted','border'].forEach(k => {
+    const el = document.getElementById('d-'+k+'-val');
+    if(el) el.textContent = d[k];
+  });
+  applyDesignToPage(d);
+};
+window.livePreviewPadding = window.livePreview;
+window.livePreviewRadius = window.livePreview;
+
+window.applyPreset = function(name) {
+  const preset = PRESETS[name];
+  if (!preset) return;
+  ['paper','ink','highlight','muted','border'].forEach(k => {
+    if(preset[k]) {
+      document.getElementById('d-'+k).value = preset[k];
+      document.getElementById('d-'+k+'-val').textContent = preset[k];
+    }
+  });
+  livePreview();
+};
+
+window.saveDesign = function() {
+  const design = getDesignFromUI();
+  set(ref(db, 'design'), design).then(() => setStatus('Design saved ✓', 'ok')).catch(() => setStatus('Error saving design', 'err'));
+};
+
+window.resetDesign = function() {
+  if (!confirm('Reset design to defaults?')) return;
+  remove(ref(db, 'design')).then(() => {
+    syncDesignUI(DESIGN_DEFAULTS);
+    applyDesignToPage(DESIGN_DEFAULTS);
+    setStatus('Design reset ✓', 'ok');
+  });
+};
+
+// load design from Firebase on start
+onValue(ref(db, 'design'), (snap) => {
+  const design = snap.val() || DESIGN_DEFAULTS;
+  applyDesignToPage(design);
+  syncDesignUI(design);
+});
+
+
   if (!confirm('Delete this item?')) return;
   remove(ref(db, section + '/' + id)).then(() => setStatus('Deleted ✓', 'ok')).catch(() => setStatus('Error', 'err'));
 };
