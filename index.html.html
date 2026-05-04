@@ -1279,6 +1279,8 @@ onValue(ref(db, 'design'), (snap) => {
 });
 
 
+// DELETE
+window.deleteItem = function(section, id) {
   if (!confirm('Delete this item?')) return;
   remove(ref(db, section + '/' + id)).then(() => setStatus('Deleted ✓', 'ok')).catch(() => setStatus('Error', 'err'));
 };
